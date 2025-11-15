@@ -4,16 +4,64 @@ import { Users, Calendar, MapPin, Shirt } from 'lucide-react';
 
 const ClubsEvents = () => {
   const { isDark } = useTheme();
+const clubs = [
+  { 
+    name: 'Tech Club', 
+    members: 150, 
+    focus: 'Technology & Innovation',
+    subclubs: ['Codex', 'Cyberhunter', 'GDG']
+  },
+  { 
+    name: 'Cultural Society', 
+    members: 200, 
+    focus: 'Arts & Culture',
+    subclubs: ['Music', 'Theatre', 'Dance']
+  },
+  { 
+    name: 'Sports Club', 
+    members: 180, 
+    focus: 'Sports & Fitness',
+    subclubs: [] 
+  },
+  { 
+    name: 'Debate Society', 
+    members: 90, 
+    focus: 'Public Speaking',
+    subclubs: [] 
+  },
+  { 
+    name: 'Music Club', 
+    members: 120, 
+    focus: 'Musical Arts',
+    subclubs: [] 
+  },
+  { 
+    name: 'Photography Club', 
+    members: 100, 
+    focus: 'Visual Arts',
+    subclubs: [] 
+  },
+  {
+    name: 'Social Clubs',
+    members: 180,
+    focus: 'Community Work',
+    subclubs: ['Pahal', 'NSS']
+  },
+  {
+    name: 'Deepro',
+    members: 120,
+    focus: 'Campus Activities',
+    subclubs: []
+  },
+  {
+    name: 'CRC',
+    members: 100,
+    focus: 'Career Development',
+    subclubs: []
+  },
+];
 
-  const clubs = [
-    { name: 'Tech Club', members: 150, focus: 'Technology & Innovation' },
-    { name: 'Cultural Society', members: 200, focus: 'Arts & Culture' },
-    { name: 'Sports Club', members: 180, focus: 'Sports & Fitness' },
-    { name: 'Debate Society', members: 90, focus: 'Public Speaking' },
-    { name: 'Music Club', members: 120, focus: 'Musical Arts' },
-    { name: 'Photography Club', members: 100, focus: 'Visual Arts' },
-  ];
-
+ 
   const events = [
     {
       id: 1,
@@ -79,26 +127,56 @@ const ClubsEvents = () => {
             <h2 className={`${isDark ? 'text-white' : 'text-gray-200'} text-3xl font-bold mb-6`}>Campus Clubs</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {clubs.map((club, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`${isDark ? 'bg-gray-900' : 'bg-white'} rounded-xl shadow-2xl p-6 hover:scale-105 transition-transform`}
-                >
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600">
-                      <Users className="text-white" size={24} />
-                    </div>
-                    <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} text-xl font-bold`}>{club.name}</h3>
-                  </div>
-                  <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm mb-3`}>{club.focus}</p>
-                  <div className={`${isDark ? 'text-pink-500' : 'text-pink-600'} font-semibold`}>
-                    {club.members} Members
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+               <motion.div
+  key={index}
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ delay: index * 0.1 }}
+  className={`${isDark ? 'bg-gray-900' : 'bg-white'} rounded-xl shadow-2xl p-6 hover:scale-105 transition-transform cursor-pointer`}
+  onClick={() => setOpenClub(openClub === index ? null : index)}
+>
+  <div className="flex items-center justify-between">
+    <div className="flex items-center space-x-3 mb-2">
+      <div className="p-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600">
+        <Users className="text-white" size={24} />
+      </div>
+      <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} text-xl font-bold`}>
+        {club.name}
+      </h3>
+    </div>
+
+    <span className={`${isDark ? 'text-pink-400' : 'text-pink-600'}`}>
+      {openClub === index ? '-' : '+'}
+    </span>
+  </div>
+
+  <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-sm mb-3`}>
+    {club.focus}
+  </p>
+
+  <div className={`${isDark ? 'text-pink-500' : 'text-pink-600'} font-semibold mb-2`}>
+    {club.members} Members
+  </div>
+
+  {/* Sub-clubs list */}
+  {openClub === index && club.subclubs.length > 0 && (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mt-3 pl-4 border-l-2 border-pink-500 space-y-2"
+    >
+      {club.subclubs.map((sub, i) => (
+        <p 
+          key={i}
+          className={`${isDark ? 'text-gray-300' : 'text-gray-700'} text-sm`}
+        >
+          • {sub}
+        </p>
+      ))}
+    </motion.div>
+  )}
+</motion.div>
+
           </motion.div>
 
           <motion.div
