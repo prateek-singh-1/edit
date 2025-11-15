@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTheme } from "../contexts/ThemeContext";
 import { motion } from "framer-motion";
 import { Users, Calendar, MapPin, Shirt } from "lucide-react";
 
-const ClubsEvents = () => {
+const ClubsEvents: React.FC = () => {
   const { isDark } = useTheme();
   const [openClub, setOpenClub] = useState<number | null>(null);
 
@@ -124,9 +124,7 @@ const ClubsEvents = () => {
               Clubs & Events
             </h1>
           </div>
-          <p
-            className={`${isDark ? "text-gray-300" : "text-gray-200"} text-lg`}
-          >
+          <p className={`${isDark ? "text-gray-300" : "text-gray-200"} text-lg`}>
             Join clubs and participate in campus events
           </p>
         </motion.div>
@@ -138,11 +136,7 @@ const ClubsEvents = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2
-              className={`${
-                isDark ? "text-white" : "text-gray-200"
-              } text-3xl font-bold mb-6`}
-            >
+            <h2 className={`${isDark ? "text-white" : "text-gray-200"} text-3xl font-bold mb-6`}>
               Campus Clubs
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -152,66 +146,30 @@ const ClubsEvents = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`${
-                    isDark ? "bg-gray-900" : "bg-white"
-                  } rounded-xl shadow-2xl p-6 hover:scale-105 transition-transform cursor-pointer`}
-                  onClick={() =>
-                    setOpenClub(openClub === index ? null : index)
-                  }
+                  className={`${isDark ? "bg-gray-900" : "bg-white"} rounded-xl shadow-2xl p-6 hover:scale-105 transition-transform cursor-pointer`}
+                  onClick={() => setOpenClub(openClub === index ? null : index)}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3 mb-2">
                       <div className="p-3 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600">
                         <Users className="text-white" size={24} />
                       </div>
-                      <h3
-                        className={`${
-                          isDark ? "text-white" : "text-gray-900"
-                        } text-xl font-bold`}
-                      >
-                        {club.name}
-                      </h3>
+                      <h3 className={`${isDark ? "text-white" : "text-gray-900"} text-xl font-bold">{club.name}</h3>
                     </div>
-                    <span
-                      className={`${
-                        isDark ? "text-pink-400" : "text-pink-600"
-                      } text-2xl`}
-                    >
+
+                    <span className={`${isDark ? "text-pink-400" : "text-pink-600"} text-2xl`}>
                       {openClub === index ? "-" : "+"}
                     </span>
                   </div>
 
-                  <p
-                    className={`${
-                      isDark ? "text-gray-400" : "text-gray-600"
-                    } text-sm mb-3`}
-                  >
-                    {club.focus}
-                  </p>
+                  <p className={`${isDark ? "text-gray-400" : "text-gray-600"} text-sm mb-3`}>{club.focus}</p>
 
-                  <div
-                    className={`${
-                      isDark ? "text-pink-500" : "text-pink-600"
-                    } font-semibold mb-2`}
-                  >
-                    {club.members} Members
-                  </div>
+                  <div className={`${isDark ? "text-pink-500" : "text-pink-600"} font-semibold mb-2`}>{club.members} Members</div>
 
-                  {openClub === index && club.subclubs.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-3 pl-4 border-l-2 border-pink-500 space-y-2"
-                    >
-                      {club.subclubs.map((sub, i) => (
-                        <p
-                          key={i}
-                          className={`${
-                            isDark ? "text-gray-300" : "text-gray-700"
-                          } text-sm`}
-                        >
-                          • {sub}
-                        </p>
+                  {openClub === index && club.subclubs && club.subclubs.length > 0 && (
+                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mt-3 pl-4 border-l-2 border-pink-500 space-y-2">
+                      {club.subclubs.map((sub: string, i: number) => (
+                        <p key={i} className={`${isDark ? "text-gray-300" : "text-gray-700"} text-sm`}>• {sub}</p>
                       ))}
                     </motion.div>
                   )}
@@ -221,21 +179,70 @@ const ClubsEvents = () => {
           </motion.div>
 
           {/* Events Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h2
-              className={`${
-                isDark ? "text-white" : "text-gray-200"
-              } text-3xl font-bold mb-6`}
-            >
-              Upcoming Events
-            </h2>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+            <h2 className={`${isDark ? "text-white" : "text-gray-200"} text-3xl font-bold mb-6`}>Upcoming Events</h2>
             <div className="space-y-6">
-              {events.map((event, index) => (
-                <motion.div
-                  key={event.index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate
+              {events.map((event) => (
+                <motion.div key={event.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }} className={`${isDark ? "bg-gray-900" : "bg-white"} rounded-xl shadow-2xl p-6 hover:scale-[1.02] transition-transform`}>
+                  <h3 className={`${isDark ? "text-white" : "text-gray-900"} text-2xl font-bold mb-4`}>{event.name}</h3>
+
+                  <div className="grid md:grid-cols-3 gap-4 mb-4">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className={`${isDark ? "text-pink-500" : "text-pink-600"}`} size={20} />
+                      <span className={`${isDark ? "text-gray-300" : "text-gray-700"}`}>{event.date}</span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Calendar className={`${isDark ? "text-pink-500" : "text-pink-600"}`} size={20} />
+                      <span className={`${isDark ? "text-gray-300" : "text-gray-700"}`}>{event.time}</span>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <MapPin className={`${isDark ? "text-pink-500" : "text-pink-600"}`} size={20} />
+                      <span className={`${isDark ? "text-gray-300" : "text-gray-700"}`}>{event.venue}</span>
+                    </div>
+                  </div>
+
+                  <p className={`${isDark ? "text-gray-400" : "text-gray-600"}`}>{event.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Merchandise Section */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+            <h2 className={`${isDark ? "text-white" : "text-gray-200"} text-3xl font-bold mb-6`}>Campus Merchandise</h2>
+
+            <div className={`${isDark ? "bg-gray-900" : "bg-white"} rounded-xl shadow-2xl p-8`}>
+              <div className="flex items-center space-x-3 mb-6">
+                <Shirt className="text-pink-500" size={32} />
+                <h3 className={`${isDark ? "text-white" : "text-gray-900"} text-2xl font-bold`}>Available Items</h3>
+              </div>
+
+              <div className="space-y-4">
+                {merchandise.map((item, index) => (
+                  <div key={index} className={`flex flex-col md:flex-row md:items-center md:justify-between p-4 rounded-lg ${isDark ? "bg-gray-800" : "bg-gray-100"}`}>
+                    <div>
+                      <h4 className={`${isDark ? "text-white" : "text-gray-900"} font-bold text-lg`}>{item.item}</h4>
+                      <p className={`${isDark ? "text-gray-400" : "text-gray-600"} text-sm`}>Sizes: {item.sizes}</p>
+                    </div>
+                    <div className={`${isDark ? "text-pink-500" : "text-pink-600"} font-bold text-xl mt-2 md:mt-0`}>{item.price}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className={`mt-6 p-4 rounded-lg ${isDark ? "bg-pink-500/20" : "bg-pink-100"} border ${isDark ? "border-pink-500" : "border-pink-300"}`}>
+                <p className={`${isDark ? "text-pink-400" : "text-pink-700"} text-sm`}>
+                  To order merchandise, visit the Student Union office or email merchandise@campusconnect.edu
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ClubsEvents;
